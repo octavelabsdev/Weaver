@@ -23,10 +23,12 @@ export function WorkspaceManager() {
 
   if (!activePluginContext) {
     return (
-      <div className="flex flex-col items-center justify-center h-full text-zinc-500 space-y-4">
-        <div className="h-16 w-16 rounded-2xl bg-zinc-800/50 border border-zinc-700/50 flex items-center justify-center">
-          <span className="text-2xl font-bold text-zinc-600">W</span>
-        </div>
+      <div className="flex flex-col items-center justify-center h-full text-zinc-500 space-y-4 select-none">
+        <img 
+          src="/Weaver Logo.jpg" 
+          alt="Weaver Logo" 
+          className="w-72 mb-2 opacity-20 pointer-events-none mix-blend-screen" 
+        />
         <p className="font-mono text-sm">
           No active plugin context. Type <code className="text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded">\pi</code> in the terminal to load a workspace.
         </p>

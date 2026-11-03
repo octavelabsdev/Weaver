@@ -14,7 +14,7 @@ use sqlx::{sqlite::{SqliteConnectOptions, SqlitePoolOptions}, Row, SqlitePool};
 use std::str::FromStr;
 use tracing::{info, error, instrument};
 
-#[instrument]
+#[instrument(skip_all)]
 pub fn validate_and_stage_patch(
     workspace_path: &str,
     file_path: &str,

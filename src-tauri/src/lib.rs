@@ -110,12 +110,14 @@ async fn get_hardware_telemetry() -> Result<HardwareTelemetry, String> {
 
 #[tauri::command]
 async fn pick_workspace_dialog() -> Result<Option<String>, String> {
-    let folder = FileDialog::new()
+    // Use AsyncFileDialog and .await so we don't block the UI thread
+    let folder = rfd::AsyncFileDialog::new()
         .set_title("Open Workspace")
-        .pick_folder();
+        .pick_folder()
+        .await;
         
-    // Convert the PathBuf to a String for the frontend, or return None if cancelled
-    Ok(folder.map(|path| path.to_string_lossy().into_owned()))
+    // AsyncFileDialog returns a FileHandle, so we call .path() on it
+    Ok(folder.map(|f| f.path().to_string_lossy().into_owned()))
 }
 
 #[tauri::command]

@@ -53,10 +53,12 @@ export default function Sidebar() {
   return (
     <nav className="flex w-20 flex-col items-center justify-between border-r border-zinc-800 bg-zinc-950 py-6 z-10 flex-shrink-0">
       <div className="flex flex-col items-center gap-6 w-full">
-        {/* Logo: The Weaver 'W' */}
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
-          <span className="font-serif font-bold text-2xl tracking-tighter">W</span>
-        </div>
+        {/* Logo: The Weaver Icon */}
+        <img 
+          src="/Weaver Icon.jpg" 
+          alt="Weaver Icon" 
+          className="h-12 w-12 rounded-xl object-cover border border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.1)] transition-transform hover:scale-105" 
+        />
         
         <div className="h-px w-8 bg-zinc-800" />
         

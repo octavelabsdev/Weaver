@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Editor from '@monaco-editor/react';
 import { invoke } from '@tauri-apps/api/core';
-import { Folder, FileCode, FileText, ChevronRight, ChevronDown, X, Save, FilePlus } from 'lucide-react';
+import { Folder, FileCode, FileText, ChevronRight, ChevronDown, X, Save, FilePlus, FolderOpen } from 'lucide-react';
 import { useAgentStore } from '../../store/useAgentStore';
 
 interface FileEntry {
@@ -357,15 +357,24 @@ const handleSave = async () => {
       {showExplorer && (
         <div className="w-64 border-r border-zinc-800 flex flex-col bg-zinc-950 transition-all">
           <div className="h-10 border-b border-zinc-800 flex items-center justify-between px-4 text-xs font-bold text-zinc-500 uppercase tracking-wider shrink-0">
-            <span className="truncate" title={workspacePath}>{workspaceTitle}</span>
-            <button
-              onClick={() => setIsCreatingFile(true)}
-              className="p-1 text-zinc-500 hover:text-emerald-400 hover:bg-zinc-900 rounded transition-colors"
-              title="New File"
-            >
-              <FilePlus className="h-3.5 w-3.5" />
-            </button>
-          </div>
+        <span className="truncate flex-1 mr-2" title={workspacePath}>{workspaceTitle}</span>
+        <div className="flex items-center space-x-1">
+          <button
+            onClick={handleOpenFolder}
+            className="p-1 text-zinc-500 hover:text-emerald-400 hover:bg-zinc-900 rounded transition-colors"
+            title="Change Workspace"
+          >
+            <FolderOpen className="h-3.5 w-3.5" />
+          </button>
+          <button
+            onClick={() => setIsCreatingFile(true)}
+            className="p-1 text-zinc-500 hover:text-emerald-400 hover:bg-zinc-900 rounded transition-colors"
+            title="New File"
+          >
+            <FilePlus className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      </div>
 
           {isCreatingFile && (
             <div className="px-3 py-2 border-b border-zinc-800 bg-zinc-900/60">
@@ -525,28 +534,43 @@ const handleSave = async () => {
         </div>
 
         {/* Editor Area */}
-        <div className="flex-1 relative">
-          <Editor
-            height="100%"
-            language={activeFilePath ? getLanguage(activeFilePath) : 'typescript'}
-            path={activeFilePath || "untitled.tsx"}
-            theme="vs-dark"
-            value={editorContent}
-            onChange={(val) => setEditorContent(val || '')}
-            onMount={handleEditorDidMount}
-            options={{
-              minimap: { enabled: false },
-              fontSize: 14,
-              fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
-              wordWrap: wordWrap, 
-              padding: { top: 16 },
-              scrollBeyondLastLine: false,
-              smoothScrolling: true,
-            }}
-          />
-        </div>
-      </div>
-      
-    </div>
-  );
-}
+                <div className="flex-1 relative bg-[#1e1e1e]">
+                  {!activeFilePath ? (
+                    // The Empty State with the static watermark
+                    <div className="flex flex-col h-full w-full items-center justify-center select-none">
+                      <img 
+                        src="/Weaver Logo.jpg" 
+                        alt="Weaver Logo" 
+                        className="w-80 mb-6 opacity-20 pointer-events-none mix-blend-screen" 
+                      />
+                      <span className="text-zinc-600/50 text-sm font-mono tracking-wider">
+                        Select a file from the explorer to begin editing
+                      </span>
+                    </div>
+                  ) : (
+                    // The Monaco Editor
+                    <Editor
+                      height="100%"
+                      language={activeFilePath ? getLanguage(activeFilePath) : 'typescript'}
+                      path={activeFilePath || "untitled.tsx"}
+                      theme="vs-dark"
+                      value={editorContent}
+                      onChange={(val) => setEditorContent(val || '')}
+                      onMount={handleEditorDidMount}
+                      options={{
+                        minimap: { enabled: false },
+                        fontSize: 14,
+                        fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+                        wordWrap: wordWrap, 
+                        padding: { top: 16 },
+                        scrollBeyondLastLine: false,
+                        smoothScrolling: true,
+                      }}
+                    />
+                  )}
+                </div>
+              </div>
+              
+            </div>
+          );
+        }

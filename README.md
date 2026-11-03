@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/Weaver Logo.jpg" alt="Weaver - By Octave Labs" width="600"/>
+</p>
+
 # Weaver
 
 **A Local-First, Zero-Trust AI Agent Orchestration IDE & Execution Engine**
